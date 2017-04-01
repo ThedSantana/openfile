@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin 
+	xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com-samulle-plugin-openfile" 
+	version="1.0.0" >
+	<name>openFile</name>
+	<js-module name="openFile" src="www/openFile.js">
+		<clobbers target="openFile" />
+	</js-module>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="openFile">
+				<param name="android-package" value="com.samulle.plugin.openfile.OpenFile" />
+			</feature>
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="application">
+          <provider
+              android:name="android.support.v4.content.FileProvider"
+              android:authorities="${applicationId}.provider"
+              android:exported="false"
+              android:grantUriPermissions="true" >
+              <meta-data
+                  android:name="android.support.FILE_PROVIDER_PATHS"
+                  android:resource="@xml/provider_paths"/>
+          </provider>
+        </config-file>
+		<source-file src="src/android/openFile/OpenFile.java" target-dir="src/com/samulle/plugin/openfile" />
+		<source-file src="src/android/openFile/PermissionHelper.java" target-dir="src/com/samulle/plugin/openfile" />
+		<source-file src="src/android/xml/provider_paths.xml" target-dir="res/xml" />
+
+		<framework src="com.android.support:support-v4:24.1.1+" />
+	</platform>
+</plugin>
