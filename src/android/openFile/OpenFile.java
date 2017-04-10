@@ -83,7 +83,7 @@ public class OpenFile extends CordovaPlugin {
             context.startActivity(intent);
         }
         //excel
-        else if("xls".equals(lastThree) || "xlsx".equals(lastThree)){
+        else if("xls".equals(lastThree) || "xlsx".equals(lastFour)){
             Intent intent = getExcelFileIntent(path);
             context.startActivity(intent);
         }
