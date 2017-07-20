@@ -146,7 +146,7 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory("android.intent.category.DEFAULT");
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
 
         Uri uri = getUri(path);
         intent.setDataAndType(uri, "application/msword");
@@ -159,7 +159,7 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
 
         Uri uri = getUri(path);
         intent.setDataAndType(uri, "application/vnd.ms-excel");
@@ -184,7 +184,7 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
 
 //        Uri uri = Uri.fromFile(new File(path));
         Uri uri = getUri(path);
@@ -198,7 +198,7 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
 
         Uri uri = getUri(path);
         intent.setDataAndType(uri, "application/pdf");
@@ -211,7 +211,7 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
         Uri uri = getUri(path);
         intent.setDataAndType(uri, "text/plain");
 
@@ -223,7 +223,7 @@ public class OpenFile extends CordovaPlugin {
     public static Intent getAudioFileIntent( String param ){
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
         intent.putExtra("oneshot", 0);
         intent.putExtra("configchange", 0);
 
@@ -238,7 +238,7 @@ public class OpenFile extends CordovaPlugin {
     public static Intent getVideoFileIntent( String param ){
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
         intent.putExtra("oneshot", 0);
         intent.putExtra("configchange", 0);
 
@@ -254,7 +254,7 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
 
         Uri uri = getUri(param);
         intent.setDataAndType(uri, "application/x-chm");
@@ -268,13 +268,26 @@ public class OpenFile extends CordovaPlugin {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        setFlags(intent);
 
         Uri uri = getUri(param);
         intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
 
         return intent;
 
+    }
+
+    /**
+     * 适配android7.0的文件打开
+     * @param intent
+     */
+    private static void setFlags(Intent intent) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            //android7.0需要设置uri阅读权限
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
     }
 
     public static Uri getUri(String UrlStr) {
