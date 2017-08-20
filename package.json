@@ -1,0 +1,25 @@
+{
+  "name": "openfile",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "com-samulle-plugin-openfile",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samulle/openfile.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samulle/openfile/issues"
+  },
+  "homepage": "https://github.com/samulle/openfile#readme"
+}
